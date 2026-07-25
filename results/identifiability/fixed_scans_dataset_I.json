@@ -1,0 +1,424 @@
+{
+  "schema_version": "1",
+  "model_version": "reduced_v2.1",
+  "pipeline_version": "mito_v2.1",
+  "dataset": "dataset_I",
+  "chamber": "O2 conc.A [nmol/mL]",
+  "diagnostic_level": "fast",
+  "method": "profile_likelihood",
+  "n_grid_used": 7,
+  "chi2_threshold": 3.841,
+  "profiles": {
+    "k_supply": {
+      "param_name": "k_supply",
+      "map_value": 0.0011892171327336025,
+      "map_nll": 194.49557513976742,
+      "profile_min_value": 0.0011761141014704896,
+      "profile_min_nll": 197.1361429435255,
+      "theta_grid": [
+        0.0010000000000000002,
+        0.0011761141014704896,
+        0.001383244379677738,
+        0.0016268532207187876,
+        0.0019133650139100484,
+        0.0022503355741198892,
+        0.0026466514017630914
+      ],
+      "nll_grid": [
+        713.6247461370608,
+        197.1361429435255,
+        650.9942457591455,
+        2325.1637192166686,
+        5475.520611436173,
+        10352.009703110063,
+        17186.180374476124
+      ],
+      "delta_nll": [
+        1032.9772063870705,
+        0.0,
+        907.7162056312401,
+        4256.055152546286,
+        10556.768936985294,
+        20309.747120333075,
+        33978.0884630652
+      ],
+      "optimizer_success": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "n_optimizer_failures": 0,
+      "ci_low": 0.0010000000000000002,
+      "ci_high": 0.001383244379677738,
+      "identified_left": true,
+      "identified_right": true,
+      "practical_id": "weakly identified",
+      "map_inside_ci": true,
+      "notes": "Fast diagnostic fixed-other-parameter scan only; this is not a full profile likelihood because other parameters were not re-optimised. Use publication-grade profile likelihood before making final CIs."
+    },
+    "c_tot": {
+      "param_name": "c_tot",
+      "map_value": 383.91915626367955,
+      "map_nll": 194.49557513976742,
+      "profile_min_value": 383.9191562636795,
+      "profile_min_nll": 194.4955751632599,
+      "theta_grid": [
+        172.50599678871686,
+        225.22472161956873,
+        294.05456142339796,
+        383.9191562636795,
+        501.2468360726724,
+        654.4304616576743,
+        854.4277954971138
+      ],
+      "nll_grid": [
+        9407.441707602744,
+        5210.719799133075,
+        1729.694239020561,
+        194.4955751632599,
+        2552.8272490229815,
+        11651.710631451131,
+        31331.828681399584
+      ],
+      "delta_nll": [
+        18425.892264878967,
+        10032.44844793963,
+        3070.3973277146024,
+        0.0,
+        4716.663347719443,
+        22914.43011257574,
+        62274.66621247265
+      ],
+      "optimizer_success": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "n_optimizer_failures": 0,
+      "ci_low": 294.05456142339796,
+      "ci_high": 501.2468360726724,
+      "identified_left": true,
+      "identified_right": true,
+      "practical_id": "weakly identified",
+      "map_inside_ci": true,
+      "notes": "Fast diagnostic fixed-other-parameter scan only; this is not a full profile likelihood because other parameters were not re-optimised. Use publication-grade profile likelihood before making final CIs."
+    },
+    "V_max": {
+      "param_name": "V_max",
+      "map_value": 4.750771739731013,
+      "map_nll": 194.49557513976742,
+      "profile_min_value": 4.750771739731013,
+      "profile_min_nll": 194.49557513976742,
+      "theta_grid": [
+        2.1346593445707063,
+        2.7870222808682947,
+        3.638750704561905,
+        4.750771739731013,
+        6.20263215469282,
+        8.098188621583322,
+        10.573036948696734
+      ],
+      "nll_grid": [
+        7308.112995814609,
+        3760.171978730784,
+        1174.5834581585884,
+        194.49557513976742,
+        1407.0864100655542,
+        5173.171686090472,
+        11476.48870445546
+      ],
+      "delta_nll": [
+        14227.234841349684,
+        7131.352807182033,
+        1960.175766037642,
+        0.0,
+        2425.1816698515736,
+        9957.352221901408,
+        22563.986258631383
+      ],
+      "optimizer_success": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "n_optimizer_failures": 0,
+      "ci_low": 3.638750704561905,
+      "ci_high": 6.20263215469282,
+      "identified_left": true,
+      "identified_right": true,
+      "practical_id": "weakly identified",
+      "map_inside_ci": true,
+      "notes": "Fast diagnostic fixed-other-parameter scan only; this is not a full profile likelihood because other parameters were not re-optimised. Use publication-grade profile likelihood before making final CIs."
+    },
+    "K_o": {
+      "param_name": "K_o",
+      "map_value": 0.14849836071157888,
+      "map_nll": 194.49557513976742,
+      "profile_min_value": 0.33048917957765667,
+      "profile_min_nll": 194.30712064394004,
+      "theta_grid": [
+        0.10000000000000002,
+        0.12204674676214623,
+        0.14895408395223447,
+        0.18179361363305827,
+        0.2218731912604931,
+        0.2707890118707863,
+        0.33048917957765667
+      ],
+      "nll_grid": [
+        194.55262549558665,
+        194.52585897521993,
+        194.49504485354174,
+        194.4565802541105,
+        194.41374109778153,
+        194.36354359642735,
+        194.30712064394004
+      ],
+      "delta_nll": [
+        0.4910097032932299,
+        0.43747666255978856,
+        0.3758484192034075,
+        0.2989192203409061,
+        0.2132409076829731,
+        0.11284590497461977,
+        0.0
+      ],
+      "optimizer_success": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "n_optimizer_failures": 0,
+      "ci_low": null,
+      "ci_high": null,
+      "identified_left": false,
+      "identified_right": false,
+      "practical_id": "non-identifiable",
+      "map_inside_ci": null,
+      "notes": "Fast diagnostic fixed-other-parameter scan only; this is not a full profile likelihood because other parameters were not re-optimised. Use publication-grade profile likelihood before making final CIs."
+    },
+    "K_r": {
+      "param_name": "K_r",
+      "map_value": 495.5675893991837,
+      "map_nll": 194.49557513976742,
+      "profile_min_value": 499.99999999999983,
+      "profile_min_nll": 194.90393092284336,
+      "theta_grid": [
+        222.67287159480384,
+        254.81075749468772,
+        291.5870337953266,
+        333.67114918344646,
+        381.82917240261156,
+        436.93773721355984,
+        499.99999999999983
+      ],
+      "nll_grid": [
+        7389.323968131406,
+        5192.093588489992,
+        3375.884872857394,
+        1961.1617052723104,
+        959.7897280200539,
+        373.858017526724,
+        194.90393092284336
+      ],
+      "delta_nll": [
+        14388.840074417125,
+        9994.379315134296,
+        6361.961883869101,
+        3532.5155486989343,
+        1529.7715941944211,
+        357.90817320776125,
+        0.0
+      ],
+      "optimizer_success": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "n_optimizer_failures": 0,
+      "ci_low": 436.93773721355984,
+      "ci_high": null,
+      "identified_left": true,
+      "identified_right": false,
+      "practical_id": "one-sided",
+      "map_inside_ci": true,
+      "notes": "Fast diagnostic fixed-other-parameter scan only; this is not a full profile likelihood because other parameters were not re-optimised. Use publication-grade profile likelihood before making final CIs."
+    },
+    "gamma_oligo": {
+      "param_name": "gamma_oligo",
+      "map_value": 0.1323989977075779,
+      "map_nll": 194.49557513976742,
+      "profile_min_value": 0.1323989977075779,
+      "profile_min_nll": 194.49557513976742,
+      "theta_grid": [
+        0.059490704490104365,
+        0.07767137147206792,
+        0.10140814431531003,
+        0.1323989977075779,
+        0.17286081618322943,
+        0.2256879756561933,
+        0.29465938828959504
+      ],
+      "nll_grid": [
+        1897.4794531543735,
+        1090.7374605845573,
+        446.49274694307763,
+        194.49557513976742,
+        662.4862736314931,
+        2256.709187027494,
+        5386.526192199984
+      ],
+      "delta_nll": [
+        3405.967756029212,
+        1792.4837708895798,
+        503.9943436066204,
+        0.0,
+        935.9813969834513,
+        4124.427223775453,
+        10384.061234120432
+      ],
+      "optimizer_success": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "n_optimizer_failures": 0,
+      "ci_low": 0.10140814431531003,
+      "ci_high": 0.17286081618322943,
+      "identified_left": true,
+      "identified_right": true,
+      "practical_id": "weakly identified",
+      "map_inside_ci": true,
+      "notes": "Fast diagnostic fixed-other-parameter scan only; this is not a full profile likelihood because other parameters were not re-optimised. Use publication-grade profile likelihood before making final CIs."
+    },
+    "tau_kappa": {
+      "param_name": "tau_kappa",
+      "map_value": 10.145107155817293,
+      "map_nll": 194.49557513976742,
+      "profile_min_value": 13.245504373788213,
+      "profile_min_nll": 184.2738655327387,
+      "theta_grid": [
+        4.5584904891815965,
+        5.951588759484385,
+        7.770425066386447,
+        10.145107155817293,
+        13.245504373788213,
+        17.293399017026832,
+        22.57835119921319
+      ],
+      "nll_grid": [
+        231.96856794355153,
+        220.6100677640892,
+        207.69791281696655,
+        194.49557513976742,
+        184.2738655327387,
+        184.42015331366994,
+        210.45352161199042
+      ],
+      "delta_nll": [
+        95.38940482162565,
+        72.67240446270097,
+        46.84809456845568,
+        20.44341921405743,
+        0.0,
+        0.2925755618624635,
+        52.35931215850343
+      ],
+      "optimizer_success": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "n_optimizer_failures": 0,
+      "ci_low": 10.145107155817293,
+      "ci_high": 22.57835119921319,
+      "identified_left": true,
+      "identified_right": true,
+      "practical_id": "weakly identified",
+      "map_inside_ci": true,
+      "notes": "Fast diagnostic fixed-other-parameter scan only; this is not a full profile likelihood because other parameters were not re-optimised. Use publication-grade profile likelihood before making final CIs."
+    },
+    "r0": {
+      "param_name": "r0",
+      "map_value": 2.8132407915402506,
+      "map_nll": 194.49557513976742,
+      "profile_min_value": 4.795463940583944,
+      "profile_min_nll": 189.2515021391833,
+      "theta_grid": [
+        1.2640705706750932,
+        1.6503770749284974,
+        2.1547408448840732,
+        2.8132407915402506,
+        3.672981727699051,
+        4.795463940583944,
+        6.260982523277375
+      ],
+      "nll_grid": [
+        206.91652330483618,
+        203.13363630931968,
+        198.88048134840068,
+        194.49557513976742,
+        190.75404707759117,
+        189.2515021391833,
+        193.0406386197694
+      ],
+      "delta_nll": [
+        35.330042331305776,
+        27.764268340272793,
+        19.257958418434782,
+        10.488146001168275,
+        3.0050898768157595,
+        0.0,
+        7.5782729611722175
+      ],
+      "optimizer_success": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "n_optimizer_failures": 0,
+      "ci_low": 2.8132407915402506,
+      "ci_high": 6.260982523277375,
+      "identified_left": true,
+      "identified_right": true,
+      "practical_id": "weakly identified",
+      "map_inside_ci": true,
+      "notes": "Fast diagnostic fixed-other-parameter scan only; this is not a full profile likelihood because other parameters were not re-optimised. Use publication-grade profile likelihood before making final CIs."
+    }
+  },
+  "interpretation_note": "Verdicts: 'identifiable' = CI bounded on both sides after re-optimisation; 'weakly identified' = bounded in a fast fixed-other diagnostic only; 'one-sided' = CI bounded on only one side (the parameter is constrained from one direction only); 'non-identifiable' = profile is essentially flat within the explored grid; 'unresolved' = too many optimiser failures to draw a conclusion. When map_inside_ci is False, the profile re-optimisation found a strictly better fit than the supplied MAP \u2014 both values are reported.",
+  "run_timestamp_utc": "2026-05-15T02:12:22+00:00",
+  "platform": "Linux 6.18.5 python 3.12.3"
+}

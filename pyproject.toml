@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mitoagent-research"
+version = "0.1.0"
+description = "Research prototype for OCR-informed mitochondrial modeling, calibration, diagnostics, and cautious interpretation"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "matplotlib>=3.7",
+    "pandas>=2.0",
+    "openpyxl>=3.1",
+]
+
+[project.optional-dependencies]
+ui = [
+    "streamlit>=1.31",
+    "plotly>=5.18",
+]
+sensitivity = [
+    "SALib>=1.4.7",
+]
+llm = [
+    "anthropic>=0.40",
+]
+dev = [
+    "pytest>=7.0",
+]
+
+[project.scripts]
+mito-agent = "agent.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["core*", "data_io*", "calibration*", "analysis*", "agent*", "app*"]
+
+[tool.pytest.ini_options]
+markers = [
+    "slow: marks tests as slow (skip with -m 'not slow')",
+]
+testpaths = ["tests"]
+addopts = "-ra"

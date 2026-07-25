@@ -1,0 +1,159 @@
+{
+  "schema_version": "1",
+  "model_version": "reduced_v2.1",
+  "pipeline_version": "mito_v2.1",
+  "dataset": null,
+  "chamber": null,
+  "run_timestamp_utc": "2026-05-15T08:19:14+00:00",
+  "analysis_type": "sensitivity_interpretation",
+  "diagnostic_level": null,
+  "metric": "AUC_OCR plus optional OCR(t)",
+  "top_morris_parameters": [
+    {
+      "parameter": "V_max",
+      "morris_mu_star": 131.98340924816353,
+      "sobol_S1": 0.61599115815731,
+      "sobol_ST": 0.7880319219607479
+    },
+    {
+      "parameter": "alpha_1",
+      "morris_mu_star": 63.032098984696816,
+      "sobol_S1": 0.12999092717348254,
+      "sobol_ST": 0.2465540160514979
+    },
+    {
+      "parameter": "c_tot",
+      "morris_mu_star": 55.67998724196193,
+      "sobol_S1": -0.0015695329837794399,
+      "sobol_ST": 0.03534760322819471
+    }
+  ],
+  "all_parameter_sensitivity": [
+    {
+      "parameter": "V_max",
+      "morris_mu_star": 131.98340924816353,
+      "sobol_S1": 0.61599115815731,
+      "sobol_ST": 0.7880319219607479
+    },
+    {
+      "parameter": "alpha_1",
+      "morris_mu_star": 63.032098984696816,
+      "sobol_S1": 0.12999092717348254,
+      "sobol_ST": 0.2465540160514979
+    },
+    {
+      "parameter": "c_tot",
+      "morris_mu_star": 55.67998724196193,
+      "sobol_S1": -0.0015695329837794399,
+      "sobol_ST": 0.03534760322819471
+    },
+    {
+      "parameter": "r0",
+      "morris_mu_star": 29.513092480466554,
+      "sobol_S1": 0.0027983404182477076,
+      "sobol_ST": 0.0018518819118772917
+    },
+    {
+      "parameter": "K_r",
+      "morris_mu_star": 28.494420918401158,
+      "sobol_S1": 0.012912849743591906,
+      "sobol_ST": 0.01625167083895455
+    },
+    {
+      "parameter": "k_supply",
+      "morris_mu_star": 27.359015325391148,
+      "sobol_S1": -0.009543676073258152,
+      "sobol_ST": 0.03822850533220033
+    },
+    {
+      "parameter": "gamma_oligo",
+      "morris_mu_star": 25.248530085710854,
+      "sobol_S1": 0.02533499394481488,
+      "sobol_ST": 0.017715311108645982
+    },
+    {
+      "parameter": "alpha_2",
+      "morris_mu_star": 23.869488364118816,
+      "sobol_S1": 0.05681116970106022,
+      "sobol_ST": 0.10349382629010119
+    },
+    {
+      "parameter": "K_o",
+      "morris_mu_star": 8.08920635777721,
+      "sobol_S1": 0.0008756007862164921,
+      "sobol_ST": 0.007513367343651199
+    },
+    {
+      "parameter": "tau_kappa",
+      "morris_mu_star": 7.758698534810473,
+      "sobol_S1": 0.0032890366101286698,
+      "sobol_ST": 0.004931240959772429
+    }
+  ],
+  "time_resolved_sobol_available": true,
+  "time_resolved_sobol_meta": {
+    "schema_version": "1",
+    "model_version": "reduced_v2.1",
+    "pipeline_version": "mito_v2.1",
+    "dataset": "dataset_II",
+    "chamber": "O2 conc.A [nmol/mL]",
+    "diagnostic_level": "publication",
+    "run_timestamp_utc": "2026-05-15T08:19:14+00:00",
+    "platform": "Linux 6.18.5 python 3.12.3",
+    "method": "time_resolved_sobol",
+    "metric": "OCR(t)",
+    "parameter_set": [
+      "k_supply",
+      "c_tot",
+      "V_max",
+      "K_o",
+      "K_r",
+      "gamma_oligo",
+      "tau_kappa",
+      "r0",
+      "alpha_1",
+      "alpha_2"
+    ],
+    "log_mask": [
+      true,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "names": [
+      "k_supply",
+      "c_tot",
+      "V_max",
+      "K_o",
+      "K_r",
+      "gamma_oligo",
+      "tau_kappa",
+      "r0",
+      "alpha_1",
+      "alpha_2"
+    ],
+    "n_evals": 1536,
+    "N_base": 128,
+    "n_t_eval": 24,
+    "seed": 0,
+    "var_degen_tol": 1e-12,
+    "salib_version": "1.5.2",
+    "n_nan_outputs": 0,
+    "interpretation_note": "Total-order indices (ST) include parameter INTERACTIONS and are NOT additive / exclusive variance contributions. Sums of ST across parameters can exceed 1. Only first-order S1 indices satisfy sum(S1) <= 1. Do not interpret ST as a fraction of variance attributable exclusively to that parameter. Time points flagged in variance_degenerate_mask have output variance below 1e-12 (typically post-Rotenone/Antimycin where OCR(t) is forced to ~0 by the inhibition switch); their Sobol indices are mathematically undefined and have been set to zero. Do NOT interpret them.",
+    "npz_filename": "time_resolved_sobol_dataset_II.npz"
+  },
+  "hypothesis_support_role": "Sensitivity can prioritize which model features and protocol phases are informative, but generated hypotheses remain candidate hypotheses requiring experimental confirmation.",
+  "experimental_design_role": "High sensitivity paired with weak identifiability motivates additional measurements or protocol refinements to reduce uncertainty.",
+  "caveats": [
+    "Sensitivity analysis complements identifiability but does not prove parameter identifiability.",
+    "Sobol total-order indices include interactions and are not additive/exclusive variance fractions.",
+    "Diagnostic-mode sample sizes are intended for workflow verification, not stable publication-level estimates.",
+    "Time points flagged as variance-degenerate in the time-resolved Sobol metadata are not interpreted."
+  ]
+}

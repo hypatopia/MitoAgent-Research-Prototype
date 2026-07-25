@@ -1,0 +1,4 @@
+dataset,chamber,method,objective_type,diagnostic_level,rmse_calib,rmse_full_trace,n_data,n_eval,seed,sigma_obs,n_warnings
+dataset_I,O2 conc.A [nmol/mL],DE+L-BFGS-B,SSE_with_post_hoc_sigma,publication,0.3705933012610112,0.3675683688926132,200,4058,0,0.3705933012623604,0
+dataset_II,O2 conc.A [nmol/mL],DE+L-BFGS-B,SSE_with_post_hoc_sigma,publication,0.31670692058361194,0.3183733293294622,200,5748,0,0.3167069205851907,0
+dataset_III,O2 conc.A [nmol/mL],DE+L-BFGS-B,SSE_with_post_hoc_sigma,publication,0.43659739721152574,0.45445840826518846,200,7384,0,0.436597397212671,0

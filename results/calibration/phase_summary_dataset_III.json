@@ -1,0 +1,67 @@
+{
+  "analysis_type": "phase_level_ocr_summary",
+  "model": "reduced_ocr_informed_v2",
+  "chamber": "O2 conc.A [nmol/mL]",
+  "data_type": "demo/synthetic",
+  "timestamp": "2026-05-15T03:18:19+00:00",
+  "phases": [
+    {
+      "phase": "basal",
+      "start_s": 210.0,
+      "end_s": 300.0,
+      "n_samples": 94,
+      "observed_slope_nmol_ml_s": -0.09440869513256753,
+      "observed_ocr_nmol_ml_s": 0.09440869513256753,
+      "observed_o2_start_nmol_ml": 172.6294325552734,
+      "observed_o2_end_nmol_ml": 164.8199177210377,
+      "fitted_ocr_mean_nmol_ml_s": 0.07166903394987707,
+      "residual_mean_nmol_ml": -0.06507795952227467,
+      "residual_rmse_nmol_ml": 0.714664589102558,
+      "warning": "stable"
+    },
+    {
+      "phase": "oligomycin",
+      "start_s": 300.0,
+      "end_s": 480.0,
+      "n_samples": 477,
+      "observed_slope_nmol_ml_s": -0.0328490294885949,
+      "observed_ocr_nmol_ml_s": 0.0328490294885949,
+      "observed_o2_start_nmol_ml": 164.958471975775,
+      "observed_o2_end_nmol_ml": 158.9225246877344,
+      "fitted_ocr_mean_nmol_ml_s": 0.044682889800517066,
+      "residual_mean_nmol_ml": 0.46588108907147113,
+      "residual_rmse_nmol_ml": 0.7910059497191483,
+      "warning": "stable"
+    },
+    {
+      "phase": "FCCP/uncoupled",
+      "start_s": 480.0,
+      "end_s": 720.0,
+      "n_samples": 1908,
+      "observed_slope_nmol_ml_s": -0.06096541948192204,
+      "observed_ocr_nmol_ml_s": 0.06096541948192204,
+      "observed_o2_start_nmol_ml": 158.7028287881952,
+      "observed_o2_end_nmol_ml": 144.3247769131264,
+      "fitted_ocr_mean_nmol_ml_s": 0.05942675345199419,
+      "residual_mean_nmol_ml": -0.014613772836831584,
+      "residual_rmse_nmol_ml": 0.3293987102075639,
+      "warning": "stable"
+    },
+    {
+      "phase": "Rot/Ant residual",
+      "start_s": 720.0,
+      "end_s": 954.0,
+      "n_samples": 477,
+      "observed_slope_nmol_ml_s": -5.586620441056031e-05,
+      "observed_ocr_nmol_ml_s": 5.586620441056031e-05,
+      "observed_o2_start_nmol_ml": 143.9913540688935,
+      "observed_o2_end_nmol_ml": 144.0148095384708,
+      "fitted_ocr_mean_nmol_ml_s": 8.837062152604893e-05,
+      "residual_mean_nmol_ml": -0.24720959783095786,
+      "residual_rmse_nmol_ml": 0.34592285036573023,
+      "warning": "stable"
+    }
+  ],
+  "warnings": [],
+  "terminology_note": "Observed OCR is approximated from within-trace oxygen slope; sigma/noise terms are within-trace observational summaries, not biological variability."
+}

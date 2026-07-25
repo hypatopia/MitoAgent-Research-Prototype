@@ -1,0 +1,67 @@
+{
+  "schema_version": "1",
+  "model_version": "reduced_v2.1",
+  "pipeline_version": "mito_v2.1",
+  "dataset": "dataset_II",
+  "chamber": "O2 conc.A [nmol/mL]",
+  "diagnostic_level": "publication",
+  "method": "fisher_information",
+  "param_names": [
+    "k_supply",
+    "c_tot",
+    "V_max",
+    "K_o",
+    "K_r",
+    "gamma_oligo",
+    "tau_kappa",
+    "r0",
+    "alpha_1",
+    "alpha_2"
+  ],
+  "theta_hat": [
+    0.0023328255696942264,
+    548.8908336504666,
+    0.21384058860503946,
+    1.3676192469377058,
+    13.658647885341148,
+    0.41964512089432926,
+    2.246823905642861,
+    3.685300290157584,
+    0.4399046763990635,
+    0.006799757612942978
+  ],
+  "sigma_obs_used": 0.3167069205851907,
+  "eigvals_raw": [
+    2.2455453708377155e-08,
+    3.5166523405234656e-05,
+    0.00016477385062306708,
+    0.0014712322371831,
+    0.18554261445297413,
+    229.87983344118618,
+    2063.408570236571,
+    9368.554040500305,
+    1267464.5614303802,
+    685256744.5102518
+  ],
+  "eigvals_clipped": [
+    2.2455453708377155e-08,
+    3.5166523405234656e-05,
+    0.00016477385062306708,
+    0.0014712322371831,
+    0.18554261445297413,
+    229.87983344118618,
+    2063.408570236571,
+    9368.554040500305,
+    1267464.5614303802,
+    685256744.5102518
+  ],
+  "condition_raw": 3.0516272501526532e+16,
+  "condition_clipped": 3.0516272501526532e+16,
+  "eig_clip_floor": 1e-12,
+  "condition_raw_note": "raw condition number is the diagnostic value: max(eig) divided by the actual smallest eigenvalue (clamped only to avoid division by zero). The clipped condition number floors tiny or numerically-negative eigenvalues at eig_clip_floor and is more appropriate for inverse-FIM-style discussion.",
+  "warnings": [
+    "FIM raw condition 3.052e+16 indicates a sloppy / practically rank-deficient information matrix. Direct interpretation of the inverse-FIM correlation matrix is NOT warranted; profile-likelihood analysis is required to obtain reliable confidence intervals."
+  ],
+  "run_timestamp_utc": "2026-05-15T04:00:33+00:00",
+  "platform": "Linux 6.18.5 python 3.12.3"
+}

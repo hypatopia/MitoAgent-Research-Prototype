@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "Please cite this software using the metadata below."
+title: "MitoAgent Research Prototype"
+type: software
+authors:
+  - family-names: "Eini Keleshteri"
+    given-names: "Marzieh"
+    # Add every qualifying software contributor after confirmation.
+version: "0.1.0"
+repository-code: "https://github.com/hypatopia/MitoAgent-Research-Prototype"
+abstract: >
+  Research prototype for reduced OCR-informed mitochondrial modeling,
+  calibration, diagnostics, identifiability, sensitivity analysis,
+  validation, and cautious interpretation.
+references:
+  - type: article
+    title: "Advanced modeling of bioenergetics in the mitochondrial electron transport chain with emphasis on Complex IV"
+    doi: "10.1002/alz.090369"

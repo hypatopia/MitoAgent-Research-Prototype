@@ -1,0 +1,3 @@
+dataset,interpretation,limitation,metric,status,validation_mode,value
+dataset_II,LODO requires multiple real biological replicate datasets and is deferred until those are supplied.,Not hierarchical Bayesian leave-one-out and not proof of biological disease/generalization.,rmse_held,deferred,pooled-transfer diagnostic,
+dataset_III,LODO requires multiple real biological replicate datasets and is deferred until those are supplied.,Not hierarchical Bayesian leave-one-out and not proof of biological disease/generalization.,rmse_held,deferred,pooled-transfer diagnostic,

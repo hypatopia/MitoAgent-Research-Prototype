@@ -1,0 +1,7 @@
+dataset,method,metric,value,n_boot,diagnostic_level
+dataset_I,parametric_bootstrap_predictive_check,coverage_90,0.9144587433762301,500,publication
+dataset_I,within_trace_holdout,rmse_test,0.254268131931467,,publication
+dataset_II,parametric_bootstrap_predictive_check,coverage_90,0.9270326615705351,500,publication
+dataset_II,within_trace_holdout,rmse_test,0.2818465182169096,,publication
+dataset_III,parametric_bootstrap_predictive_check,coverage_90,0.8955021981738248,500,publication
+dataset_III,within_trace_holdout,rmse_test,0.3052740358796584,,publication

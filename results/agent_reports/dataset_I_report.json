@@ -1,0 +1,413 @@
+{
+  "ok": true,
+  "error": null,
+  "mode": "fast",
+  "skipped_analyses": [
+    "profile_likelihoods (publication-mode only)"
+  ],
+  "diagnostic_thresholds": {
+    "coverage_band": [
+      0.8,
+      0.95
+    ],
+    "fim_sloppy_threshold": 1000000000000000.0
+  },
+  "warnings_by_category": {
+    "numerical_stability": [],
+    "identifiability": [],
+    "validation_noise_model": [
+      "parametric-bootstrap predictive-check coverage 67.5% lies outside the configurable warning band [0.80, 0.95]. This is a HINT of possible noise-model misspecification or heteroscedasticity, NOT proof of either."
+    ],
+    "data_pipeline": [],
+    "unsupported_claim": []
+  },
+  "warning_counts": {
+    "numerical_stability": 0,
+    "identifiability": 0,
+    "validation_noise_model": 1,
+    "data_pipeline": 0,
+    "unsupported_claim": 0
+  },
+  "data": {
+    "n_chambers": 2,
+    "chamber_label": "O2 conc.A [nmol/mL]",
+    "n_samples": 1321,
+    "t_start": 210.0,
+    "t_end": 826.2,
+    "t_oligo": 300.0,
+    "t_fccp": [
+      480.0
+    ],
+    "t_inhibit": 660.0,
+    "n_fccp": 1,
+    "noise_sd_estimate": 0.23913496457081418
+  },
+  "calibration": {
+    "method": "staged (DE Stage A + DE Stage B); diagnostic strategy",
+    "params": {
+      "k_supply": 1.4056070474497382,
+      "c_tot": 583.5237223079903,
+      "V_max": 0.4113805089326448,
+      "K_o": 72.05671081092541,
+      "K_r": 468.7094757443579,
+      "gamma_oligo": 0.9734684709457808,
+      "tau_kappa": 6.763584445596365,
+      "r0": 222.0496605441283,
+      "alphas": [
+        0.40014402543876315
+      ],
+      "sigma_obs": 1.884543931586031
+    },
+    "rmse_calib": 1.8848227726517668,
+    "objective": 213.15341305840164,
+    "n_data": 60
+  },
+  "stability": {
+    "is_healthy": true,
+    "max_jacobian_eig": 2.811782469015904,
+    "stiffness_ratio": 34799.007554414966,
+    "cytc_drift": 0.0,
+    "oxygen_monotone": true,
+    "tolerance_robust": true,
+    "warnings": []
+  },
+  "identifiability": {
+    "fim": {
+      "param_names": [
+        "k_supply",
+        "c_tot",
+        "V_max",
+        "K_o",
+        "K_r",
+        "gamma_oligo",
+        "tau_kappa",
+        "r0",
+        "alpha_1"
+      ],
+      "eigvals_raw": [
+        4.616524697891003e-10,
+        8.508176886258788e-10,
+        1.6626439736117452e-09,
+        2.0517763737708255e-06,
+        6.324267776231246e-05,
+        0.001369937582069082,
+        78.45560978956932,
+        460.1251943585922,
+        211485.69831244196
+      ],
+      "eigvals_clipped": [
+        4.616524697891003e-10,
+        8.508176886258788e-10,
+        1.6626439736117452e-09,
+        2.0517763737708255e-06,
+        6.324267776231246e-05,
+        0.001369937582069082,
+        78.45560978956932,
+        460.1251943585922,
+        211485.69831244196
+      ],
+      "condition_raw": 458105852675403.94,
+      "condition_clipped": 458105852675403.94,
+      "condition": 458105852675403.94,
+      "warnings": []
+    }
+  },
+  "sensitivity": {
+    "method": "morris",
+    "ranking": [
+      [
+        "V_max",
+        181.4960377882229,
+        66.88818858338112
+      ],
+      [
+        "gamma_oligo",
+        81.29584332290807,
+        114.96968419181482
+      ],
+      [
+        "alpha_1",
+        81.23529436444672,
+        71.20817403170966
+      ],
+      [
+        "K_r",
+        41.673427825764215,
+        49.468580862187
+      ],
+      [
+        "c_tot",
+        17.14491009840366,
+        22.978442965515192
+      ],
+      [
+        "K_o",
+        13.19881340228966,
+        18.66594092074981
+      ],
+      [
+        "r0",
+        9.310670483146609,
+        12.79067576882753
+      ],
+      [
+        "tau_kappa",
+        6.6544482060122805,
+        9.410810903051878
+      ],
+      [
+        "k_supply",
+        0.0,
+        0.0
+      ]
+    ],
+    "names": [
+      "k_supply",
+      "c_tot",
+      "V_max",
+      "K_o",
+      "K_r",
+      "gamma_oligo",
+      "tau_kappa",
+      "r0",
+      "alpha_1"
+    ],
+    "mu_star": [
+      0.0,
+      17.14491009840366,
+      181.4960377882229,
+      13.19881340228966,
+      41.673427825764215,
+      81.29584332290807,
+      6.6544482060122805,
+      9.310670483146609,
+      81.23529436444672
+    ],
+    "sigma": [
+      0.0,
+      22.978442965515192,
+      66.88818858338112,
+      18.66594092074981,
+      49.468580862187,
+      114.96968419181482,
+      9.410810903051878,
+      12.79067576882753,
+      71.20817403170966
+    ]
+  },
+  "validation": {
+    "parametric_bootstrap_coverage_90": 0.675,
+    "coverage_90": 0.675,
+    "n_boot": 5,
+    "within_configurable_band": false,
+    "configurable_threshold_low": 0.8,
+    "configurable_threshold_high": 0.95,
+    "explicit_disclaimer": "This is a PARAMETRIC-BOOTSTRAP predictive check, NOT a posterior-predictive check (no posterior parameter samples are drawn). Coverage assumes the iid-Gaussian observation-noise model fitted at the MAP. Coverage near the nominal level is COMPATIBLE with that noise model for this trace; it is NOT evidence that the noise model is correct or well-calibrated in any stronger sense."
+  },
+  "tool_log": [
+    {
+      "tool": "load_data",
+      "kwargs": {
+        "path": "data_samples/dataset_I.xlsx",
+        "chamber_index": 0
+      },
+      "ok": true,
+      "message": "Loaded dataset_I.xlsx (chamber O2 conc.A [nmol/mL], n=1321)",
+      "elapsed": 0.31024596499992185
+    },
+    {
+      "tool": "preprocess_data",
+      "kwargs": {
+        "do_outliers": true,
+        "n_sigma": 4.0
+      },
+      "ok": true,
+      "message": "Preprocessed: 1321/1321 samples retained, 0 issue(s)",
+      "elapsed": 0.01426441600006001
+    },
+    {
+      "tool": "check_stability",
+      "kwargs": {
+        "params": {
+          "alphas": [
+            1.0
+          ]
+        }
+      },
+      "ok": true,
+      "message": "[OK ] eig_max=2.00e-01  stiff_ratio=3009.2  drift=0.000  o-mono=True  NaN=0  neg=0",
+      "elapsed": 0.039689459000101124
+    },
+    {
+      "tool": "calibrate",
+      "kwargs": {
+        "method": "staged",
+        "n_data": 60,
+        "maxiter_stageA": 3,
+        "maxiter_stageB": 3
+      },
+      "ok": true,
+      "message": "Calibration done (staged): RMSE=1.885 nmol/mL",
+      "elapsed": 6.81354503700004
+    },
+    {
+      "tool": "check_stability",
+      "kwargs": {
+        "params": {
+          "k_supply": 1.4056070474497382,
+          "c_tot": 583.5237223079903,
+          "V_max": 0.4113805089326448,
+          "K_o": 72.05671081092541,
+          "K_r": 468.7094757443579,
+          "gamma_oligo": 0.9734684709457808,
+          "tau_kappa": 6.763584445596365,
+          "r0": 222.0496605441283,
+          "alphas": [
+            0.40014402543876315
+          ],
+          "sigma_obs": 1.884543931586031
+        }
+      },
+      "ok": true,
+      "message": "[OK ] eig_max=2.81e+00  stiff_ratio=34799.0  drift=0.000  o-mono=True  NaN=0  neg=0",
+      "elapsed": 0.03635248800014779
+    },
+    {
+      "tool": "analyze_identifiability",
+      "kwargs": {
+        "params": {
+          "k_supply": 1.4056070474497382,
+          "c_tot": 583.5237223079903,
+          "V_max": 0.4113805089326448,
+          "K_o": 72.05671081092541,
+          "K_r": 468.7094757443579,
+          "gamma_oligo": 0.9734684709457808,
+          "tau_kappa": 6.763584445596365,
+          "r0": 222.0496605441283,
+          "alphas": [
+            0.40014402543876315
+          ],
+          "sigma_obs": 1.884543931586031
+        },
+        "method": "fim"
+      },
+      "ok": true,
+      "message": "FIM cond \u2248 4.6e+14",
+      "elapsed": 0.2025412899999992
+    },
+    {
+      "tool": "analyze_sensitivity",
+      "kwargs": {
+        "method": "morris",
+        "N": 2
+      },
+      "ok": true,
+      "message": "Morris (n_eval=20)",
+      "elapsed": 0.4463056150000284
+    },
+    {
+      "tool": "validate",
+      "kwargs": {
+        "params": {
+          "k_supply": 1.4056070474497382,
+          "c_tot": 583.5237223079903,
+          "V_max": 0.4113805089326448,
+          "K_o": 72.05671081092541,
+          "K_r": 468.7094757443579,
+          "gamma_oligo": 0.9734684709457808,
+          "tau_kappa": 6.763584445596365,
+          "r0": 222.0496605441283,
+          "alphas": [
+            0.40014402543876315
+          ],
+          "sigma_obs": 1.884543931586031
+        },
+        "method": "ppc",
+        "n_boot": 5
+      },
+      "ok": true,
+      "message": "parametric-bootstrap predictive check coverage at 90% PI: 67.5%",
+      "elapsed": 0.009382859999959692
+    },
+    {
+      "tool": "_warn",
+      "category": "validation_noise_model",
+      "message": "parametric-bootstrap predictive-check coverage 67.5% lies outside the configurable warning band [0.80, 0.95]. This is a HINT of possible noise-model misspecification or heteroscedasticity, NOT proof of either."
+    }
+  ],
+  "analysis_status": {
+    "Data parsing": "passed",
+    "Calibration": "passed",
+    "Numerical stability": "passed",
+    "Identifiability": "weak",
+    "Sensitivity": "completed",
+    "Validation": "warning",
+    "Hypothesis summary": "exploratory only",
+    "Experimental-design guidance": "generated",
+    "Ask MitoAgent": "deterministic/offline"
+  },
+  "hypothesis_prioritization": {
+    "status": "generated",
+    "label": "Candidate hypothesis requiring experimental confirmation",
+    "observed_phenotype": [
+      "Trace contains 1321 samples and 1 FCCP injection(s).",
+      "Calibration RMSE is 1.8848227726517668 nmol/mL in the diagnostic calibration window.",
+      "Parametric-bootstrap 90% predictive-interval coverage is 67.5%."
+    ],
+    "candidate_interpretations": [
+      "Dominant phase-level OCR differences may indicate altered respiratory capacity, altered uncoupling/FCCP response, or upstream supply effects.",
+      "Effective CIV-mediated OCR limitation cannot be uniquely separated from upstream supply or coupling limitations using OCR alone.",
+      "Sensitivity results can prioritize which parameters or phases are high-information, but do not prove identifiability."
+    ],
+    "identifiability_caveats": [
+      "All hypotheses are exploratory and require experimental confirmation.",
+      "OCR-only limitation applies; additional observables are needed for mechanistic separation.",
+      "FIM condition number is approximately 4.58e+14; direct inverse-FIM interpretation is not warranted if the matrix is ill-conditioned.",
+      "parametric-bootstrap predictive-check coverage 67.5% lies outside the configurable warning band [0.80, 0.95]. This is a HINT of possible noise-model misspecification or heteroscedasticity, NOT proof of either."
+    ],
+    "recommended_follow_up": [
+      "Add membrane-potential proxy or redox-state measurement if coupling/supply ambiguity is central.",
+      "Use a targeted Complex IV activity assay if CIV dysfunction is the biological question.",
+      "Increase biological and technical replicates before disease/control generalization.",
+      "Inspect FCCP plateau duration and sampling density around transitions."
+    ]
+  },
+  "experimental_design_guidance": {
+    "status": "generated",
+    "main_uncertainty_sources": [
+      "Practical sloppiness / weak identifiability from OCR-only data.",
+      "Limited FCCP titration information.",
+      "Predictive-interval coverage suggests possible observation-noise mismatch."
+    ],
+    "recommendations": [
+      {
+        "recommendation": "Add membrane-potential proxy or redox-state measurement.",
+        "why_it_helps": "These observables help separate coupling/drive changes from electron-supply or CIV-mediated OCR capacity."
+      },
+      {
+        "recommendation": "Run profile likelihoods with nuisance-parameter re-optimization.",
+        "why_it_helps": "Profiles are needed before treating fitted parameters as interpretable biological endpoints."
+      },
+      {
+        "recommendation": "Use a longer FCCP plateau or denser sampling near FCCP transitions.",
+        "why_it_helps": "Additional transition/plateau information can improve separation of FCCP-response parameters."
+      },
+      {
+        "recommendation": "Inspect residuals and consider heteroscedastic or phase-specific noise models.",
+        "why_it_helps": "Residual structure can reveal whether a single iid observation-noise estimate is adequate."
+      },
+      {
+        "recommendation": "Use targeted Complex IV activity assay for CIV-specific claims.",
+        "why_it_helps": "OCR stress tests do not directly measure isolated Complex IV enzymatic activity."
+      },
+      {
+        "recommendation": "Add biological and technical replicates for disease/control or treatment/control studies.",
+        "why_it_helps": "Replicates are required to assess biological generalization rather than single-trace fit quality."
+      },
+      {
+        "recommendation": "Record clear event labels for oligomycin, each FCCP dose, and rotenone/antimycin.",
+        "why_it_helps": "Accurate event parsing controls phase-level summaries, model inputs, and diagnostics."
+      }
+    ]
+  }
+}

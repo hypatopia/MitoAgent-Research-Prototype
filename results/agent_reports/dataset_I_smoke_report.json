@@ -1,0 +1,49 @@
+{
+  "mode": "smoke",
+  "schema_version": "1",
+  "model_version": "reduced_v2.1",
+  "pipeline_version": "mito_v2.1",
+  "run_timestamp_utc": "2026-07-24T22:32:00+00:00",
+  "platform": "Linux 6.12.13 python 3.13.5",
+  "dataset": "dataset_I",
+  "checks": {
+    "load_preprocess": {
+      "ok": true,
+      "n_samples_raw": 1321,
+      "n_samples_preprocessed": 1321,
+      "warnings": []
+    },
+    "simulate": {
+      "ok": true,
+      "n_eval": 120
+    },
+    "objective": {
+      "ok": true,
+      "sse": 103945.01679082518
+    },
+    "numerical_diagnostics": {
+      "ok": true,
+      "warnings": []
+    },
+    "fim_diagnostic": {
+      "ok": true,
+      "condition_raw": 1911238058678291.8,
+      "condition_clipped": 1911238058678291.8,
+      "warnings": [
+        "FIM raw condition 1.911e+15 indicates a sloppy / practically rank-deficient information matrix. Direct interpretation of the inverse-FIM correlation matrix is NOT warranted; profile-likelihood analysis is required to obtain reliable confidence intervals."
+      ]
+    },
+    "paths": {
+      "figures_dir_exists": true,
+      "final_figures_dir_exists": true,
+      "manuscript_main_exists": true
+    }
+  },
+  "warnings": [],
+  "skipped_analyses": [
+    "calibration optimization skipped in smoke mode",
+    "Morris/Sobol skipped in smoke mode",
+    "profile likelihoods skipped in smoke mode",
+    "validation bootstrap skipped in smoke mode"
+  ]
+}

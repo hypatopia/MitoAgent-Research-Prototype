@@ -1,0 +1,24 @@
+# Local Python environments
+.venv/
+venv/
+
+# Python cache / compiled files
+__pycache__/
+*.py[cod]
+
+# Matplotlib runtime cache
+.mplconfig/
+
+# Tool/test caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environment variables and local secrets
+.env
+.env.*
+.streamlit/secrets.toml
+
+# OS-generated files
+.DS_Store
+Thumbs.db

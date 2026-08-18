@@ -6,6 +6,22 @@ The prototype helps researchers connect respirometry measurements to an interpre
 
 > **Status:** MitoAgent is a research prototype. It is not a diagnostic tool, medical device, clinical system, or commercially validated product.
 
+
+## Live demo
+
+**[Launch the hosted MitoAgent demo](https://mitoagent-research.streamlit.app/)**
+
+The hosted demo can be explored directly in a browser without installing Python or uploading local files.
+
+For the quickest walkthrough:
+
+**Load Data → Use bundled demo data → Demo 1 — Standard OCR workflow → Load dataset**
+
+Then follow the workflow through preprocessing, calibration, numerical diagnostics, identifiability, sensitivity, validation, interpretation, experiment guidance, and report generation.
+
+The hosted application is provided for research and software demonstration purposes only. It does not constitute biological, clinical, commercial, or regulatory validation.
+
+
 ![MitoAgent architecture](assets/agent_architecture.png)
 
 ## What the prototype demonstrates

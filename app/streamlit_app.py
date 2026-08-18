@@ -644,18 +644,72 @@ def page_dashboard():
 
 
 def page_load_data():
-    _hero("Load Data", "Load demo or real Oroboros-style Excel/CSV data and inspect detected protocol events.")
-    col1, col2, col3 = st.columns([3, 2, 1])
+    _hero(
+        "Load Data",
+        "Start with a bundled demonstration dataset or upload your own Oroboros-style Excel/CSV data."
+    )
+
+    st.markdown("### Choose a data source")
+
+    data_source = st.radio(
+        "Data source",
+        ["Use bundled demo data", "Upload my own file"],
+        index=0,
+        horizontal=True,
+        help="Use the bundled demo for a quick walkthrough, or upload your own compatible Excel/CSV file."
+    )
+
+    demo_dir = ROOT / "data_samples"
+    demo_files = sorted(demo_dir.glob("*.xlsx")) if demo_dir.exists() else []
+
+    upl = None
+    demo_choice = None
+
+    col1, col2 = st.columns([3, 1])
+
     with col1:
-        upl = st.file_uploader("Upload Excel/CSV", type=["xlsx", "xls", "csv"], help="Expected columns include time, O₂ trace columns, and recognized event labels.")
+        if data_source == "Use bundled demo data":
+            if not demo_files:
+                st.error("No bundled demo datasets were found.")
+            else:
+                demo_choice = st.selectbox(
+                    "Demo dataset",
+                    [f.name for f in demo_files],
+                    index=0,
+                    help="Bundled datasets are provided for research/software demonstration purposes."
+                )
+
+                st.caption(
+                    "Quick demo: select a dataset and click **Load dataset**. "
+                    "No local file upload is required."
+                )
+
+        else:
+            upl = st.file_uploader(
+                "Upload Excel/CSV",
+                type=["xlsx", "xls", "csv"],
+                help="Expected columns include time, O₂ trace columns, and recognized event labels."
+            )
+
     with col2:
-        demo_dir = ROOT / "data_samples"
-        demo_files = sorted(demo_dir.glob("*.xlsx")) if demo_dir.exists() else []
-        demo_choice = st.selectbox("Demo file", ["(none)"] + [f.name for f in demo_files], help="Demo fixtures are synthetic/parser examples, not biological validation data.")
-    with col3:
-        chamber_idx = st.number_input("Chamber", min_value=0, max_value=8, value=0, step=1, help="0 = Chamber A, 1 = Chamber B, etc.")
-    if st.button("Load selected dataset", type="primary"):
-        path = _save_uploaded_file(upl) if upl is not None else (str(demo_dir / demo_choice) if demo_choice != "(none)" else None)
+        chamber_idx = st.number_input(
+            "Chamber",
+            min_value=0,
+            max_value=8,
+            value=0,
+            step=1,
+            help="0 = Chamber A, 1 = Chamber B, etc."
+        )
+
+    if st.button("Load dataset", type="primary"):
+        if data_source == "Use bundled demo data":
+            path = (
+                str(demo_dir / demo_choice)
+                if demo_choice is not None
+                else None
+            )
+        else:
+            path = _save_uploaded_file(upl) if upl is not None else None
         if path is None:
             st.error("No file selected.")
         else:

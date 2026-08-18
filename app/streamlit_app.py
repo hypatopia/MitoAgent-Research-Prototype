@@ -672,10 +672,17 @@ def page_load_data():
             if not demo_files:
                 st.error("No bundled demo datasets were found.")
             else:
+                demo_labels = {
+                    "dataset_I.xlsx": "Demo 1 — Standard OCR workflow",
+                    "dataset_II.xlsx": "Demo 2 — Alternative OCR trace",
+                    "dataset_III.xlsx": "Demo 3 — Extended OCR trace",
+                }
+
                 demo_choice = st.selectbox(
                     "Demo dataset",
                     [f.name for f in demo_files],
                     index=0,
+                    format_func=lambda filename: demo_labels.get(filename, filename),
                     help="Bundled datasets are provided for research/software demonstration purposes."
                 )
 

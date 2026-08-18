@@ -619,6 +619,28 @@ def page_dashboard():
     ch = st.session_state.get("chamber")
     report = _current_structured_report()
     render_status_card(st, report)
+    st.markdown("### Quick Demo")
+
+    st.info(
+        """
+    **Explore MitoAgent using the bundled demonstration data — no upload or local installation is required.**
+
+    1. **Load Data** — select **Demo 1 — Standard OCR workflow** and load the dataset.
+    2. **Event Parsing & Preprocessing** — review detected interventions and prepare the trace.
+    3. **Calibration** — fit the mechanistic model to the observed OCR data.
+    4. **Numerical Diagnostics & Identifiability** — examine whether fitted parameters are actually supported by the observations.
+    5. **Sensitivity & Validation** — evaluate influential parameters and predictive behavior.
+    6. **Interpretation / Experiment Guidance** — review what the model supports, what remains uncertain, and what information could be collected next.
+    7. **Report Builder** — generate a reproducible analysis report.
+    
+    A successful model fit does not necessarily imply that every fitted parameter is identifiable or scientifically well supported. MitoAgent is designed to make that distinction explicit.
+        """
+    )
+
+    st.caption(
+        "MitoAgent is a research prototype. Bundled datasets and outputs are provided "
+        "for scientific-software demonstration and are not clinical or diagnostic results."
+    )    
     st.markdown("### Project snapshot")
     _metric_cards([
         ("Loaded trace", st.session_state.get("loaded_label") or "None", "Current chamber"),

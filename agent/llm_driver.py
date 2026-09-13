@@ -36,7 +36,8 @@ from agent.orchestrator  import MitoAgent
 # a supported hosted LLM provider is configured. Set to True only when
 # an Anthropic API key is configured. Detection is intentionally
 # cheap (env-vars only) — actual provider import is deferred until ask().
-LLM_AVAILABLE = bool(os.environ.get("ANTHROPIC_API_KEY"))
+LLM_AVAILABLE = False
+LLM_RELEASE_STATUS = "disabled_excluded_from_approved_release"
 
 
 
@@ -154,85 +155,28 @@ class OfflineRouter:
 
 # ── Anthropic adapter (sketch; requires `anthropic` package + key) ───────
 class AnthropicAdapter:
-    """Reference LLM adapter using the Anthropic Messages API.
-    Loads the API key from $ANTHROPIC_API_KEY.  Requires `anthropic`
-    Python package (pip install anthropic).
-    """
-    def __init__(self, model: str = "claude-opus-4-7"):
-        try:
-            from anthropic import Anthropic
-        except ImportError:
-            raise RuntimeError("Install: pip install anthropic")
-        self.client = Anthropic()
-        self.model  = model
-        self.tools  = tool_schemas_anthropic()
+    """Disabled compatibility stub for the approved public release."""
 
-    def chat(self, messages: List[Dict[str, str]]) -> Dict[str, Any]:
-        return self.client.messages.create(
-            model=self.model,
-            max_tokens=2048,
-            tools=self.tools,
-            messages=messages,
+    def __init__(self, *args, **kwargs):
+        raise RuntimeError(
+            "External LLM providers/tool-calling are disabled and excluded "
+            "from the approved public MitoAgent research prototype."
         )
 
 
 # ── Top-level natural-language driver ─────────────────────────────────────
 class NaturalLanguageDriver:
-    """Plug-in NL driver with provider auto-detection.
+    """Deterministic-only public-release driver."""
 
-    provider = 'anthropic' | 'offline'
-    'offline' uses the keyword router and works without API keys.
-    """
     def __init__(self, agent: MitoAgent, provider: str = "auto"):
+        if provider not in {"auto", "offline"}:
+            raise RuntimeError(
+                "External LLM providers/tool-calling are disabled and excluded "
+                "from the approved public MitoAgent research prototype."
+            )
         self.agent = agent
-        if provider == "auto":
-            provider = "anthropic" if os.getenv("ANTHROPIC_API_KEY") else "offline"
-        self.provider = provider
-        if provider == "anthropic":
-            self.adapter = AnthropicAdapter()
-        else:
-            self.adapter = OfflineRouter(agent)
+        self.provider = "offline"
+        self.adapter = OfflineRouter(agent)
 
     def ask(self, query: str) -> str:
-        if isinstance(self.adapter, OfflineRouter):
-            return self.adapter.ask(query)
-        # LLM-driven loop
-        messages = [{"role": "user", "content": query}]
-        for _ in range(8):       # max 8 tool-call rounds
-            resp = self.adapter.chat(messages)
-            if resp.stop_reason == "end_turn":
-                return "".join(c.text for c in resp.content
-                                  if hasattr(c, "text"))
-            tool_uses = [c for c in resp.content
-                          if getattr(c, "type", None) == "tool_use"]
-            if not tool_uses:
-                return "".join(getattr(c, "text", "") for c in resp.content)
-            # Execute each tool call
-            tool_results = []
-            for tu in tool_uses:
-                if tu.name in TOOLS:
-                    # Inject the chamber from agent state if needed
-                    kwargs = dict(tu.input)
-                    if tu.name not in ("load_data", "preprocess_data"):
-                        kwargs["chamber"] = self.agent.state.chamber
-                    if tu.name in ("check_stability", "analyze_identifiability",
-                                    "validate"):
-                        kwargs["params"] = self.agent.state.params
-                    out = self.agent._call(tu.name, **kwargs)
-                    tool_results.append({
-                        "type":         "tool_result",
-                        "tool_use_id":  tu.id,
-                        "content":      json.dumps(
-                            {k: v for k, v in out.items() if not k.startswith("_")},
-                            default=str)[:8000],
-                    })
-                else:
-                    tool_results.append({
-                        "type":         "tool_result",
-                        "tool_use_id":  tu.id,
-                        "content":      f"unknown tool: {tu.name}",
-                        "is_error":     True,
-                    })
-            messages.append({"role": "assistant", "content": resp.content})
-            messages.append({"role": "user", "content": tool_results})
-        return "(LLM exceeded max tool-call rounds)"
+        return self.adapter.ask(query)

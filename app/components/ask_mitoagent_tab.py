@@ -15,12 +15,13 @@ EXAMPLES = [
 def render(st, report=None):
     st.header("Ask MitoAgent / Interpretation Assistant")
     st.caption("Ask questions about the current deterministic backend outputs. Full purpose and guardrails are documented in the Help Hub.")
-    st.caption("The optional LLM layer does not perform numerical inference. All simulations, estimates, diagnostics, sensitivity indices, validation outputs, and figures are produced by deterministic Python backend modules.")
+    st.caption("External LLM providers are disabled in the approved public release. Interpretation is deterministic and uses structured backend outputs only.")
     example = st.selectbox("Example questions", EXAMPLES, help="Choose an example or type your own question below.")
     question = st.text_input("Your question", value=example, help="Ask about interpretation, missing analyses, parameter trustworthiness, uncertainty, follow-up design, or workflow steps.")
-    mode = st.selectbox("Answer mode", ["deterministic/offline", "LLM-assisted (if configured)"], help="Deterministic/offline mode is fully reproducible and does not need an API key. LLM-assisted mode is only for language explanation if a provider is configured.")
+    mode = "deterministic/offline"
+    st.caption("Answer mode: deterministic/offline")
     if st.button("Ask MitoAgent", type="primary", help="Generate an interpretation using only structured backend outputs and safety rules."):
-        out = ask(question, report, llm_assisted=mode.startswith("LLM"))
+        out = ask(question, report, llm_assisted=False)
         st.subheader("Answer")
         st.markdown(f"<div class='mito-card'><p>{out['answer']}</p></div>", unsafe_allow_html=True)
         st.markdown(f"<span class='mito-badge badge-blue'>Mode: {out['answer_mode']}</span> <span class='mito-badge badge-yellow'>Route: {out.get('route','overview')}</span>", unsafe_allow_html=True)

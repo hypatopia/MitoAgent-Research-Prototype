@@ -30,7 +30,6 @@ os.environ.setdefault("MPLBACKEND", "Agg")
 os.environ.setdefault("MPLCONFIGDIR", os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".mplconfig"))
 import sys
 import subprocess
-import tempfile
 from copy import deepcopy
 from dataclasses import asdict, replace
 from pathlib import Path
@@ -72,7 +71,6 @@ class _DummyContext:
             if name == "text_input": return kwargs.get("value", "")
             if name == "button": return False
             if name == "download_button": return False
-            if name == "file_uploader": return None
             if name in {"expander", "container", "spinner"}: return _DummyContext()
             return None
         return _method
@@ -186,17 +184,6 @@ def _params_from_calib(calib: Dict[str, Any]) -> Dict[str, Any]:
     if "sigma_obs" not in p and "sigma_obs" in calib:
         p["sigma_obs"] = float(calib["sigma_obs"])
     return p
-
-
-def _save_uploaded_file(uploaded_file) -> Optional[str]:
-    """Write a Streamlit UploadedFile to a temp path and return the path."""
-    if uploaded_file is None:
-        return None
-    suffix = Path(uploaded_file.name).suffix or ".xlsx"
-    tmp = tempfile.NamedTemporaryFile(delete=False, suffix=suffix)
-    tmp.write(uploaded_file.getvalue())
-    tmp.close()
-    return tmp.name
 
 
 def _trace_fig(t: np.ndarray, o: np.ndarray, *,
@@ -408,8 +395,7 @@ def _current_structured_report() -> Dict[str, Any]:
     tier_name = (run_cfg.tier if "run_cfg" in globals()
                  else (diagnostic_level if "diagnostic_level" in globals()
                        else "fast"))
-    is_reportable = bool(run_cfg.reportable) if "run_cfg" in globals() \
-                                              else False
+    is_reportable = False  # hosted/public demo is never manuscript-reportable
     report: Dict[str, Any] = {
         "ok": True,
         "mode": tier_name,
@@ -523,26 +509,24 @@ def _desktop_sidebar():
         st.markdown("<div class='desktop-brand'><div class='brand-icon'>🧬</div><div><h2>MitoAgent</h2><span>Scientific OCR Workbench</span></div></div>", unsafe_allow_html=True)
         diagnostic_level = st.selectbox(
             "Analysis mode",
-            ["fast", "publication", "smoke"], index=0,
-            help=("Tiers are defined in core/run_settings.py.\n\n"
-                  "• smoke — CI / import-sanity only. NEVER reportable.\n"
-                  "• fast — development / iteration. NEVER reportable.\n"
-                  "• publication — benchmark-validated, scientifically "
-                  "defensible budgets. The only tier whose UI outputs "
-                  "may be carried into a manuscript table."),
+            ["fast", "smoke"], index=0,
+            help=(
+                "Public-demo numerical budgets only. "
+                "Hosted outputs are synthetic/demo and NOT manuscript-reportable."
+            ),
         )
         run_cfg = get_settings(diagnostic_level)
-        # Tier badge — clear visual signal of whether displayed numbers
-        # may be quoted in a report. badge-pass = reportable;
-        # badge-yellow = explicitly non-reportable.
-        badge_class = "badge-pass" if run_cfg.reportable else "badge-yellow"
-        reportable_text = ("Reportable" if run_cfg.reportable
-                           else "NOT reportable")
         st.markdown(
-            f"<span class='mito-badge {badge_class}'>"
-            f"Tier: {run_cfg.tier} · {reportable_text}</span>",
-            unsafe_allow_html=True)
-        with st.expander("Tier budgets (see core/run_settings.py)", expanded=False):
+            "<span class='mito-badge badge-yellow'>"
+            "PUBLIC DEMO · SYNTHETIC/DEMO DATA · NOT MANUSCRIPT-REPORTABLE"
+            "</span>",
+            unsafe_allow_html=True,
+        )
+        st.caption(
+            f"Configuration: {run_cfg.tier} · data class: synthetic/demo · "
+            "gate status: NOT manuscript-approved"
+        )
+        with st.expander("Demo numerical budgets (see core/run_settings.py)", expanded=False):
             st.markdown(
                 f"- DE calibration: maxiter={run_cfg.de_maxiter}, "
                 f"popsize={run_cfg.de_popsize}, "
@@ -572,8 +556,8 @@ def _desktop_sidebar():
             "PROJECT & DATA": ["Dashboard", "Load Data", "Event Parsing & Preprocessing"],
             "MODEL & ANALYSIS": ["Model Simulation", "Calibration", "Numerical Diagnostics", "Identifiability", "Sensitivity", "Validation"],
             "INTERPRETATION": ["Hypothesis Prioritization", "Experimental Design Guidance", "Ask MitoAgent"],
-            "OUTPUTS": ["Report Builder", "Manuscript Figures", "Export Results"],
-            "LEARNING & SETTINGS": ["Help / Runbook", "FAQ", "Optional NL Agent / LLM Settings"],
+            "OUTPUTS": ["Report Builder", "Export Results"],
+            "LEARNING & SETTINGS": ["Help / Runbook", "FAQ", "Deterministic Interpretation"],
         }
         for group, pages in groups.items():
             st.markdown(f"<div class='nav-group-title'>{group}</div>", unsafe_allow_html=True)
@@ -646,12 +630,11 @@ def page_dashboard():
         ("Loaded trace", st.session_state.get("loaded_label") or "None", "Current chamber"),
         ("Samples", str(len(_active_chamber().t)) if _active_chamber() is not None else "—", "Active trace"),
         ("FCCP injections", str(len(getattr(_active_chamber(), "t_fccp", []))) if _active_chamber() is not None else "—", "Parsed protocol"),
-        ("Tier", run_cfg.tier,
-         "Reportable" if run_cfg.reportable else "NOT reportable"),
+        ("Mode", run_cfg.tier, "Demo-only; NOT manuscript-reportable"),
     ])
     st.markdown("### Recommended next action")
     if ch_raw is None:
-        st.info("Start with **Load Data**. Use a demo Excel file or upload a real Oroboros-style CSV/Excel file.")
+        st.info("Start with **Load Data** and select a bundled synthetic/demo dataset. Private or measured datasets must not be uploaded to the hosted/public demo.")
     elif ch is None:
         st.info("Next: go to **Event Parsing & Preprocessing** and generate the calibration-ready trace.")
     elif st.session_state.get("calib_result") is None:
@@ -667,107 +650,101 @@ def page_dashboard():
 
 def page_load_data():
     _hero(
-        "Load Data",
-        "Start with a bundled demonstration dataset or upload your own Oroboros-style Excel/CSV data."
+        "Load Demo Data",
+        "Use a bundled synthetic/demo dataset. The hosted/public UI does not accept private or measured files."
     )
-
-    st.markdown("### Choose a data source")
-
-    data_source = st.radio(
-        "Data source",
-        ["Use bundled demo data", "Upload my own file"],
-        index=0,
-        horizontal=True,
-        help="Use the bundled demo for a quick walkthrough, or upload your own compatible Excel/CSV file."
+    st.warning(
+        "Research prototype; not clinical or diagnostic. "
+        "Private or measured datasets must not be uploaded to the hosted/public demo."
+    )
+    st.caption(
+        "Data class: synthetic/demo · gate status: NOT manuscript-approved · "
+        "hosted outputs are NOT manuscript-reportable."
     )
 
     demo_dir = ROOT / "data_samples"
     demo_files = sorted(demo_dir.glob("*.xlsx")) if demo_dir.exists() else []
-
-    upl = None
     demo_choice = None
 
     col1, col2 = st.columns([3, 1])
-
     with col1:
-        if data_source == "Use bundled demo data":
-            if not demo_files:
-                st.error("No bundled demo datasets were found.")
-            else:
-                demo_labels = {
-                    "dataset_I.xlsx": "Demo 1 — Standard OCR workflow",
-                    "dataset_II.xlsx": "Demo 2 — Alternative OCR trace",
-                    "dataset_III.xlsx": "Demo 3 — Extended OCR trace",
-                }
-
-                demo_choice = st.selectbox(
-                    "Demo dataset",
-                    [f.name for f in demo_files],
-                    index=0,
-                    format_func=lambda filename: demo_labels.get(filename, filename),
-                    help="Bundled datasets are provided for research/software demonstration purposes."
-                )
-
-                st.caption(
-                    "Quick demo: select a dataset and click **Load dataset**. "
-                    "No local file upload is required."
-                )
-
+        if not demo_files:
+            st.error("No bundled demo datasets were found.")
         else:
-            upl = st.file_uploader(
-                "Upload Excel/CSV",
-                type=["xlsx", "xls", "csv"],
-                help="Expected columns include time, O₂ trace columns, and recognized event labels."
+            demo_labels = {
+                "dataset_I.xlsx": "Demo 1 — Standard OCR workflow",
+                "dataset_II.xlsx": "Demo 2 — Alternative OCR trace",
+                "dataset_III.xlsx": "Demo 3 — Extended OCR trace",
+            }
+            demo_choice = st.selectbox(
+                "Bundled demo dataset",
+                [f.name for f in demo_files],
+                index=0,
+                format_func=lambda filename: demo_labels.get(filename, filename),
+                help="Synthetic/representative fixtures for software demonstration only.",
             )
-
+            st.caption("No user-file upload is available in this public UI.")
     with col2:
         chamber_idx = st.number_input(
-            "Chamber",
-            min_value=0,
-            max_value=8,
-            value=0,
-            step=1,
+            "Chamber", min_value=0, max_value=8, value=0, step=1,
             help="0 = Chamber A, 1 = Chamber B, etc."
         )
 
-    if st.button("Load dataset", type="primary"):
-        if data_source == "Use bundled demo data":
-            path = (
-                str(demo_dir / demo_choice)
-                if demo_choice is not None
-                else None
-            )
-        else:
-            path = _save_uploaded_file(upl) if upl is not None else None
+    if st.button("Load demo dataset", type="primary"):
+        path = str(demo_dir / demo_choice) if demo_choice is not None else None
         if path is None:
-            st.error("No file selected.")
+            st.error("No demo dataset selected.")
         else:
             try:
                 ds = load_dataset(path)
                 if chamber_idx >= len(ds.chambers):
-                    st.error(f"Chamber index {chamber_idx} out of range; file has {len(ds.chambers)} chamber(s).")
+                    st.error(
+                        f"Chamber index {chamber_idx} out of range; "
+                        f"file has {len(ds.chambers)} chamber(s)."
+                    )
                 else:
                     ch = ds.chambers[chamber_idx]
                     st.session_state.chamber_raw = ch
                     st.session_state.chamber = None
                     st.session_state.loaded_path = path
                     st.session_state.loaded_label = ch.label
-                    for key in ["calib_result","fim_report","sens_morris","sens_sobol","sens_trs","validation_ppc","validation_wt","stability"]:
+                    for key in [
+                        "calib_result", "fim_report", "sens_morris", "sens_sobol",
+                        "sens_trs", "validation_ppc", "validation_wt", "stability",
+                    ]:
                         st.session_state[key] = None
-                    st.success(f"Loaded {Path(path).name}, chamber {ch.label} ({len(ch.t)} samples).")
+                    st.success(
+                        f"Loaded bundled demo {Path(path).name}, chamber {ch.label} "
+                        f"({len(ch.t)} samples)."
+                    )
             except Exception as e:
                 st.exception(e)
+
     ch = st.session_state.get("chamber_raw")
     if ch is not None:
         _metric_cards([
-            ("Samples", str(len(ch.t)), "Raw trace"),
+            ("Samples", str(len(ch.t)), "Synthetic/demo trace"),
             ("FCCP injections", str(len(ch.t_fccp)), "Detected events"),
-            ("Noise estimate", f"{ch.sigma_obs_est:.3f}" if ch.sigma_obs_est is not None else "—", "Within-trace"),
+            ("Noise estimate",
+             f"{ch.sigma_obs_est:.3f}" if ch.sigma_obs_est is not None else "—",
+             "Within-trace"),
         ])
-        event_rows = [{"Event":"Start","Time [s]":ch.t_start},{"Event":"Oligomycin","Time [s]":ch.t_oligo}] + [{"Event":f"FCCP {i+1}","Time [s]":t} for i,t in enumerate(ch.t_fccp)] + [{"Event":"Rotenone/Antimycin","Time [s]":ch.t_inhibit},{"Event":"End","Time [s]":ch.t_end}]
+        event_rows = (
+            [{"Event": "Start", "Time [s]": ch.t_start},
+             {"Event": "Oligomycin", "Time [s]": ch.t_oligo}]
+            + [{"Event": f"FCCP {i+1}", "Time [s]": t}
+               for i, t in enumerate(ch.t_fccp)]
+            + [{"Event": "Rotenone/Antimycin", "Time [s]": ch.t_inhibit},
+               {"Event": "End", "Time [s]": ch.t_end}]
+        )
         st.dataframe(pd.DataFrame(event_rows), hide_index=True, use_container_width=True)
-        render_plot(st, _trace_fig(ch.t, ch.o, title=f"Raw trace — chamber {ch.label}", events={"oligo":ch.t_oligo,"fccp":list(ch.t_fccp),"inhib":ch.t_inhibit}))
-
+        render_plot(
+            st,
+            _trace_fig(
+                ch.t, ch.o, title=f"Bundled demo trace — chamber {ch.label}",
+                events={"oligo": ch.t_oligo, "fccp": list(ch.t_fccp), "inhib": ch.t_inhibit},
+            ),
+        )
 
 def page_preprocess():
     _hero("Event Parsing & Preprocessing", "Confirm detected interventions, reject artifacts, and prepare a calibration-ready trace.")
@@ -1420,41 +1397,41 @@ def page_manuscript_figures():
 
 
 def page_optional_agent():
-    _hero("Optional NL Agent / LLM Settings", "Configure optional natural-language explanation. All numerical results remain deterministic backend outputs.")
-    has_llm = False
-    try:
-        from agent.llm_driver import LLM_AVAILABLE
-        has_llm = bool(LLM_AVAILABLE)
-    except Exception:
-        has_llm = False
-    st.markdown(f"<span class='mito-badge {'badge-pass' if has_llm else 'badge-yellow'}'>{'LLM provider configured' if has_llm else 'No LLM provider configured'}</span>", unsafe_allow_html=True)
-    st.info("LLM-assisted mode is optional. It can explain structured backend outputs, route questions, and summarize caveats. It cannot estimate parameters, create results, diagnose disease, or override diagnostics.")
+    _hero(
+        "Deterministic Interpretation",
+        "The public prototype uses deterministic, evidence-constrained interpretation only."
+    )
+    st.markdown(
+        "<span class='mito-badge badge-yellow'>EXTERNAL LLM PROVIDERS DISABLED</span>",
+        unsafe_allow_html=True,
+    )
+    st.info(
+        "External LLM providers and provider-driven tool calling are disabled "
+        "and excluded from the approved public release. Public-demo interpretation "
+        "is deterministic and cannot make demo outputs manuscript-reportable."
+    )
     st.caption(
-        f"Pipeline run tier follows the sidebar selector: currently "
-        f"'{run_cfg.tier}' ({'reportable' if run_cfg.reportable else 'NOT reportable'}). "
-        f"Switch the sidebar to 'publication' before generating any report "
-        f"intended for a manuscript.")
-    if st.session_state.loaded_path and st.button("Run deterministic full pipeline", type="primary"):
+        f"Configuration: {run_cfg.tier} · data class: synthetic/demo · "
+        "gate status: NOT manuscript-approved."
+    )
+    if st.session_state.loaded_path and st.button("Run deterministic demo pipeline", type="primary"):
         try:
             a = MitoAgent(verbose=False)
-            # MitoAgent.run_pipeline uses a fast: bool flag. The
-            # publication tier (reportable=True) maps to fast=False;
-            # smoke and fast both map to fast=True (publication budgets
-            # are only honoured when reportable).
             rep = a.run_pipeline(
                 st.session_state.loaded_path,
-                fast=not run_cfg.reportable,
+                fast=True,
                 coverage_band=(float(cov_lo), float(cov_hi)),
-                fim_sloppy_threshold=float(fim_thr))
-            st.success(f"Pipeline complete: mode={rep.get('mode')} (tier={run_cfg.tier})")
+                fim_sloppy_threshold=float(fim_thr),
+            )
+            st.success(f"Demo pipeline complete: mode={rep.get('mode')}")
             st.dataframe(pd.DataFrame([
-                {"Item": "Tier",              "Value": run_cfg.tier},
-                {"Item": "Reportable",        "Value": "yes" if run_cfg.reportable else "no"},
-                {"Item": "Warnings",          "Value": str(rep.get('warning_counts', {}))},
-                {"Item": "Skipped analyses",  "Value": ', '.join(rep.get('skipped_analyses', [])) or 'none'},
+                {"Item": "Data class", "Value": "synthetic/demo"},
+                {"Item": "Manuscript reportable", "Value": "no"},
+                {"Item": "Warnings", "Value": str(rep.get("warning_counts", {}))},
+                {"Item": "Skipped analyses", "Value": ", ".join(rep.get("skipped_analyses", [])) or "none"},
             ]), hide_index=True, use_container_width=True)
-        except Exception as e: st.exception(e)
-
+        except Exception as e:
+            st.exception(e)
 
 def render_page():
     _desktop_sidebar()
@@ -1473,11 +1450,10 @@ def render_page():
         "Experimental Design Guidance": lambda: (render_status_card(st, _current_structured_report()), render_design_guidance_tab(st, _current_structured_report())),
         "Ask MitoAgent": lambda: (render_status_card(st, _current_structured_report()), render_ask_mitoagent_tab(st, _current_structured_report())),
         "Report Builder": page_report_builder,
-        "Manuscript Figures": page_manuscript_figures,
         "Export Results": page_export_results,
         "Help / Runbook": lambda: render_help_tab(st),
         "FAQ": lambda: render_faq_tab(st),
-        "Optional NL Agent / LLM Settings": page_optional_agent,
+        "Deterministic Interpretation": page_optional_agent,
     }
     dispatch.get(page, page_dashboard)()
 

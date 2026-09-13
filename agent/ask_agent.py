@@ -4,6 +4,9 @@ from typing import Any, Dict
 from agent.interpretation import interpret_question
 
 def ask(question: str, report: Dict[str, Any] | None = None, *, llm_assisted: bool = False) -> Dict[str, Any]:
-    """Answer a natural-language question using structured backend outputs only."""
-    mode = "llm_assisted" if llm_assisted else "deterministic_offline"
-    return interpret_question(question, report, answer_mode=mode)
+    """Answer using deterministic structured backend outputs only."""
+    if llm_assisted:
+        raise RuntimeError(
+            "LLM-assisted mode is disabled and excluded from the approved public release."
+        )
+    return interpret_question(question, report, answer_mode="deterministic_offline")

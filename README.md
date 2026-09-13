@@ -35,8 +35,8 @@ The hosted application is provided for research and software demonstration purpo
 - Optional Morris and Sobol sensitivity analysis
 - Validation diagnostics and reproducible JSON/CSV outputs
 - Cautious hypothesis prioritization and experiment-design guidance
-- Optional natural-language explanation using an Anthropic adapter
-- Fully offline deterministic operation when no supported API key is configured
+- Deterministic, evidence-constrained interpretation for bundled demo outputs
+- No external LLM/provider tool-calling in the approved public release
 
 ## Research lineage
 
@@ -141,19 +141,20 @@ Run the Streamlit interface:
 streamlit run app/streamlit_app.py
 ```
 
-## Using authorized real data
+## Public-demo data boundary
 
-Do not commit real experimental, clinical, proprietary, or otherwise restricted data to this repository.
+The hosted Streamlit application is **bundled-demo-only**. It accepts only the
+synthetic/representative fixtures shipped in `data_samples/`.
 
-Authorized local files may be stored under `data_real/`. The repository `.gitignore` is configured to exclude the contents of that folder while retaining its explanatory `README.md`.
+**Do not upload private, measured, clinical, proprietary, personally
+identifiable, or otherwise restricted data to the hosted/public demo.**
 
-See:
+Real/private measured-data analysis for the manuscript is performed only in the
+separate private, evidence-gated workflow. The public prototype is not the
+canonical manuscript calculation source and its outputs are not manuscript-reportable.
 
-- `docs/real_data_format_guide.md`
-- `docs/REAL_DATA_RUNBOOK.md`
-- `docs/USING_REAL_OROBOROS_DATA.md`
-
-Users are responsible for confirming that they have the necessary permissions, approvals, and data-use rights before processing real data.
+Researchers working from a local clone remain responsible for all data-use
+permissions and must keep restricted data outside Git.
 
 ## Repository map
 
@@ -172,25 +173,18 @@ assets/         selected explanatory figures
 figures/        reproducible figure-generation scripts
 ```
 
-## LLM boundary and external-service use
+## Deterministic interpretation boundary
 
-All numerical simulations, calibrations, parameter estimates, diagnostics, and validation results are produced by deterministic Python modules.
+All numerical simulations, calibrations, parameter estimates, diagnostics,
+validation results, and public-demo interpretation are produced by deterministic
+Python modules.
 
-The optional hosted-LLM layer may route user questions and explain structured outputs, but it does not perform the underlying numerical analysis.
+External hosted-LLM providers and provider-driven tool calling are **disabled
+and excluded from the approved public release**. API-key environment variables
+must not activate an external provider.
 
-The hosted-LLM layer must not:
-
-- Invent numerical results
-- Diagnose disease
-- Make clinical recommendations
-- Present weakly identified parameters as established biological conclusions
-- Override deterministic diagnostics or validation results
-
-When a hosted LLM is enabled, user prompts and selected structured outputs may be transmitted to the configured third-party provider.
-
-Users must not submit confidential, personally identifiable, clinical, proprietary, or otherwise restricted information unless they are authorized to use the configured provider for that information.
-
-MitoAgent can operate without a hosted LLM. When no supported API key is configured, it uses the offline deterministic workflow.
+The public demo is deterministic-only. Its bundled synthetic/demo outputs remain
+non-clinical, non-diagnostic, and **not manuscript-reportable**.
 
 ## License and permitted use
 

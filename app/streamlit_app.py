@@ -37,6 +37,24 @@ from typing import Any, Dict, List, Optional, Tuple
 
 # Make the project root importable when launched via `streamlit run`.
 ROOT = Path(__file__).resolve().parent.parent
+
+PUBLIC_PROTOTYPE_VERSION = "0.1.0"
+
+def _public_source_commit() -> str:
+    """Best-effort source identity for the hosted public demo."""
+    for key in ("GITHUB_SHA", "SOURCE_VERSION", "COMMIT_SHA"):
+        value = os.environ.get(key, "").strip()
+        if value:
+            return value[:12]
+    try:
+        return subprocess.check_output(
+            ["git", "rev-parse", "--short=12", "HEAD"],
+            cwd=str(ROOT),
+            text=True,
+            stderr=subprocess.DEVNULL,
+        ).strip()
+    except Exception:
+        return "unavailable"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
@@ -523,7 +541,9 @@ def _desktop_sidebar():
             unsafe_allow_html=True,
         )
         st.caption(
-            f"Configuration: {run_cfg.tier} · data class: synthetic/demo · "
+            f"Version: {PUBLIC_PROTOTYPE_VERSION} | "
+            f"commit: {_public_source_commit()} | "
+            f"configuration: {run_cfg.tier} | data class: synthetic/demo | "
             "gate status: NOT manuscript-approved"
         )
         with st.expander("Demo numerical budgets (see core/run_settings.py)", expanded=False):
@@ -1411,7 +1431,9 @@ def page_optional_agent():
         "is deterministic and cannot make demo outputs manuscript-reportable."
     )
     st.caption(
-        f"Configuration: {run_cfg.tier} · data class: synthetic/demo · "
+        f"Version: {PUBLIC_PROTOTYPE_VERSION} | "
+        f"commit: {_public_source_commit()} | "
+        f"configuration: {run_cfg.tier} | data class: synthetic/demo | "
         "gate status: NOT manuscript-approved."
     )
     if st.session_state.loaded_path and st.button("Run deterministic demo pipeline", type="primary"):

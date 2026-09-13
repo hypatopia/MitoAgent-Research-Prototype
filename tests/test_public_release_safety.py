@@ -54,3 +54,15 @@ def test_readme_states_public_boundary():
     assert "Do not upload private" in text
     assert "not the canonical manuscript calculation source" in normalized
     assert "disabled and excluded from the approved public release" in normalized
+
+def test_public_release_shows_identity_and_has_no_llm_extra():
+    app = _read("app/streamlit_app.py")
+    pyproject = _read("pyproject.toml")
+
+    assert 'PUBLIC_PROTOTYPE_VERSION = "0.1.0"' in app
+    assert "commit: {_public_source_commit()}" in app
+    assert "configuration: {run_cfg.tier}" in app
+    assert "data class: synthetic/demo" in app
+    assert "gate status: NOT manuscript-approved" in app
+
+    assert "anthropic" not in pyproject.lower()

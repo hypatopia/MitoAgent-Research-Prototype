@@ -24,9 +24,6 @@ ui = [
 sensitivity = [
     "SALib>=1.4.7",
 ]
-llm = [
-    "anthropic>=0.40",
-]
 dev = [
     "pytest>=7.0",
 ]
